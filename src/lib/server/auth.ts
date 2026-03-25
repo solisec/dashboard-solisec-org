@@ -4,25 +4,28 @@ import { sveltekitCookies } from "better-auth/svelte-kit";
 import { env } from "$env/dynamic/private";
 import { getRequestEvent } from "$app/server";
 import { getDb } from "$lib/server/db";
+import { admin } from "better-auth/plugins";
 
-const authConfig = ({
-	baseURL: env.ORIGIN,
-	secret: env.BETTER_AUTH_SECRET,
-	emailAndPassword: { enabled: true },
-	plugins: [
-		sveltekitCookies(getRequestEvent) // make sure this is the last plugin in the array
-	]
-}) satisfies Omit<Parameters<typeof betterAuth>[0], "database">;
+const authConfig = {
+  baseURL: env.ORIGIN,
+  secret: env.BETTER_AUTH_SECRET,
+  emailAndPassword: { enabled: true },
+  plugins: [
+    admin(),
+    sveltekitCookies(getRequestEvent), // make sure this is the last plugin in the array
+  ],
+} satisfies Omit<Parameters<typeof betterAuth>[0], "database">;
 
-export const createAuth = (d1: D1Database) => betterAuth({
-	...authConfig,
-	database: drizzleAdapter(getDb(d1), { provider: 'sqlite' })
-});
+export const createAuth = (d1: D1Database) =>
+  betterAuth({
+    ...authConfig,
+    database: drizzleAdapter(getDb(d1), { provider: "sqlite" }),
+  });
 
 /**
-* DO NOT USE!
-*
-* This instance is used by the `better-auth` CLI for schema generation ONLY.
-* To access `auth` at runtime, use `event.locals.auth`.
-*/
+ * DO NOT USE!
+ *
+ * This instance is used by the `better-auth` CLI for schema generation ONLY.
+ * To access `auth` at runtime, use `event.locals.auth`.
+ */
 export const auth = createAuth(null!);
