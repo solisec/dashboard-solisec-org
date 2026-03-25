@@ -1,41 +1,18 @@
-import devtoolsJson from 'vite-plugin-devtools-json';
-import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vite-plus';
-import { playwright } from 'vite-plus/test/browser-playwright';
-import { sveltekit } from '@sveltejs/kit/vite';
+import devtoolsJson from "vite-plugin-devtools-json";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "vite-plus";
+import { sveltekit } from "@sveltejs/kit/vite";
 
 export default defineConfig({
   staged: {
-    "*": "vp check --fix"
+    "*": "vp check --fix",
   },
-  lint: {"options":{"typeAware":true,"typeCheck":true}},
+  lint: { options: { typeAware: true, typeCheck: true } },
   plugins: [tailwindcss(), sveltekit(), devtoolsJson()],
-  	test: {
-  		expect: { requireAssertions: true },
-  		projects: [
-  			{
-  				extends: './vite.config.ts',
-  				test: {
-  					name: 'client',
-  					browser: {
-  						enabled: true,
-  						provider: playwright(),
-  						instances: [{ browser: 'chromium', headless: true }]
-  					},
-  					include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
-  					exclude: ['src/lib/server/**']
-  				}
-  			},
-  
-  			{
-  				extends: './vite.config.ts',
-  				test: {
-  					name: 'server',
-  					environment: 'node',
-  					include: ['src/**/*.{test,spec}.{js,ts}'],
-  					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
-  				}
-  			}
-  		]
-  	}
+  test: {
+    expect: { requireAssertions: true },
+    environment: "node",
+    include: ["src/**/*.{test,spec}.{js,ts}", "tests/**/*.{test,spec}.{js,ts}"],
+    exclude: ["src/**/*.svelte.{test,spec}.{js,ts}"],
+  },
 });
