@@ -1,0 +1,12 @@
+default_provider = "keychain"
+
+[providers.keychain]
+type = "keychain"
+service = "dashboard-solisec-org"
+
+[secrets]
+CLOUDFLARE_ACCOUNT_ID = { provider = "keychain", value = "CLOUDFLARE_ACCOUNT_ID" }
+CLOUDFLARE_DATABASE_ID = { provider = "keychain", value = "CLOUDFLARE_DATABASE_ID" }
+CLOUDFLARE_D1_TOKEN = { provider = "keychain", value = "CLOUDFLARE_D1_TOKEN" }
+ORIGIN = { provider = "keychain", value = "ORIGIN" }
+BETTER_AUTH_SECRET = { provider = "keychain", value = "BETTER_AUTH_SECRET" }
