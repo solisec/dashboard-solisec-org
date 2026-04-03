@@ -39,5 +39,8 @@
     "vitest": "npm:@voidzero-dev/vite-plus-test@^0.1.14",
     "wrangler": "^4.77.0"
   },
-  "packageManager": "pnpm@10.33.0"
+  "packageManager": "pnpm@10.33.0",
+  "blockExoticSubdeps": true,
+  "minimumReleaseAge": 10080,
+  "trustPolicy": "no-downgrade"
 }
