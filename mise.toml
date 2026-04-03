@@ -5,10 +5,10 @@ pnpm = "10.33.0"
 viteplus = "0.1.15"
 wrangler = "4.80.0"
 
-[tasks.gitleaks]
-description = "Scan the repository for secrets"
+[tasks.secrets]
+description = "Scan project for secrets"
 run = "gitleaks dir ."
 
-[tasks.pre-commit]
-description = "Run pre-commit checks"
-depends = ["gitleaks"]
+[tasks.check]
+description = "Run project checks"
+depends = ["secrets"]
