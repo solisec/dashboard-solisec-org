@@ -6,6 +6,33 @@ pnpm = "10.33.0"
 viteplus = "0.1.15"
 wrangler = "4.80.0"
 
+[hooks]
+enter = { task = "setup" }
+
+[tasks.setup]
+description = "Install project dependencies"
+run = "vp install"
+
+[tasks.format]
+description = "Format project"
+run = "vp fmt"
+
+[tasks.lint]
+description = "Lint project"
+run = "vp lint"
+
+[tasks.typecheck]
+description = "Type-check project"
+run = "vp check"
+
+[tasks.test]
+description = "Run test suite"
+run = "vp test"
+
+[tasks.build]
+description = "Build project"
+run = "vp build"
+
 [tasks.secrets]
 description = "Scan project for secrets"
 run = "gitleaks dir ."
@@ -16,4 +43,4 @@ run = "cog check"
 
 [tasks.check]
 description = "Run project checks"
-depends = ["secrets", "commits"]
+depends = ["format", "lint", "typecheck", "test", "build", "secrets", "commits"]
